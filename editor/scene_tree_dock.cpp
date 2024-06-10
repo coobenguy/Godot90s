@@ -2992,6 +2992,10 @@ void SceneTreeDock::_replace_node(Node *p_node, Node *p_by_node, bool p_keep_pro
 			to_erase.push_back(oldnode->get_child(i));
 		}
 	}
+
+	if (oldnode == edited_scene) {
+		EditorNode::get_singleton()->set_edited_scene_root(newnode, false);
+	}
 	oldnode->replace_by(newnode, true);
 
 	// Re-apply size of anchored control.
@@ -4171,7 +4175,7 @@ void SceneTreeDock::_create_remap_for_node(Node *p_node, HashMap<Ref<Resource>, 
 
 				bool is_valid_default = false;
 				Variant orig = PropertyUtils::get_property_default_value(p_node, E.name, &is_valid_default, &states_stack);
-				if (is_valid_default && !PropertyUtils::is_property_value_different(v, orig)) {
+				if (is_valid_default && !PropertyUtils::is_property_value_different(p_node, v, orig)) {
 					continue;
 				}
 
