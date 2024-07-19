@@ -214,11 +214,6 @@ def get_opts():
             os.path.join(d3d12_deps_folder, "mesa"),
         ),
         (
-            "dxc_path",
-            "Path to the DirectX Shader Compiler distribution (required for D3D12)",
-            os.path.join(d3d12_deps_folder, "dxc"),
-        ),
-        (
             "agility_sdk_path",
             "Path to the Agility SDK distribution (optional for D3D12)",
             os.path.join(d3d12_deps_folder, "agility_sdk"),
@@ -587,7 +582,7 @@ def configure_msvc(env: "SConsEnvironment", vcvars_msvc_config):
                 "libEGL.windows." + env["arch"] + prebuilt_lib_extra_suffix,
                 "libGLES.windows." + env["arch"] + prebuilt_lib_extra_suffix,
             ]
-            LIBS += ["dxgi", "d3d9", "d3d11"]
+            LIBS += ["dxgi", "d3d9", "d3d11", "synchronization"]
         env.Prepend(CPPPATH=["#thirdparty/angle/include"])
 
     if env["target"] in ["editor", "template_debug"]:
@@ -812,7 +807,7 @@ def configure_mingw(env: "SConsEnvironment"):
                     "ANGLE.windows." + env["arch"],
                 ]
             )
-            env.Append(LIBS=["dxgi", "d3d9", "d3d11"])
+            env.Append(LIBS=["dxgi", "d3d9", "d3d11", "synchronization"])
         env.Prepend(CPPPATH=["#thirdparty/angle/include"])
 
     env.Append(CPPDEFINES=["MINGW_ENABLED", ("MINGW_HAS_SECURE_API", 1)])
