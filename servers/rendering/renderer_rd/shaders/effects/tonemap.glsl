@@ -264,9 +264,9 @@ vec3 linear_to_srgb(vec3 color) {
 	//if going to srgb, clamp from 0 to 1.
 	color = clamp(color, vec3(0.0), vec3(1.0));
 	const vec3 a = vec3(0.055f);
-	//return mix((vec3(1.0f) + a) * pow(color.rgb, vec3(1.0f / 2.2f)) - a, 12.92f * color.rgb, lessThan(color.rgb, vec3(0.0031308f)));
-	//return pow(color.rgb, vec3(1.0f / 2.2f));
-	return color;
+	//return mix((vec3(1.0f) + a) * pow(color.rgb, vec3(1.0f / 2.2f)) - a, 12.92f * color.rgb, lessThan(color.rgb, vec3(0.0031308f))); // SRGB
+	return pow(color.rgb, vec3(1.0f / 2.2f)); // 2.2 gamma
+	//return color; // linear
 }
 
 #define TONEMAPPER_LINEAR 0
